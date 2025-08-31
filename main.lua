@@ -18,9 +18,13 @@ function myGameSetUp()
     --     end
     -- )
 
-    gfx.fillCircleInRect(20, 40, 50, 50)
     x = 40
     y = 20
+    gfx.drawCircleAtPoint(x, y, 25)
+    
+    angle = math.random() * math.pi
+    x_coord = 50 * math.cos(angle)
+    y_coord = 50 * math.sin(angle)
 
 end
 
@@ -32,25 +36,21 @@ function playdate.update()
 
     if playdate.buttonIsPressed( playdate.kButtonUp ) then
         x = x - 10
-        gfx.clear()
-        gfx.fillCircleInRect(y, x, 50, 50)
-
     end
     if playdate.buttonIsPressed( playdate.kButtonDown ) then
         x = x + 10
-        gfx.clear()
-        gfx.fillCircleInRect(y, x, 50, 50)
     end
     if playdate.buttonIsPressed( playdate.kButtonLeft) then
         y = y - 20
-        gfx.clear()
-        gfx.fillCircleInRect(y, x, 50, 50)
     end
     if playdate.buttonIsPressed( playdate.kButtonRight) then
         y = y + 20
-        gfx.clear()
-        gfx.fillCircleInRect(y, x, 50, 50)
     end
+
+    gfx.clear()
+    gfx.drawCircleAtPoint(x, y, 25)
+
+    playdate.graphics.drawLine(x + x_coord, y + y_coord, x - x_coord, y - y_coord)
 
     -- Call the functions below in playdate.update() to draw sprites and keep
     -- timers updated. (We aren't using timers in this example, but in most
