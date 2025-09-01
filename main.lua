@@ -20,11 +20,10 @@ function myGameSetUp()
 
     x = 40
     y = 20
-    gfx.drawCircleAtPoint(x, y, 25)
-    
+
     angle = math.random() * math.pi
-    x_coord = 50 * math.cos(angle)
-    y_coord = 50 * math.sin(angle)
+    x_coord = 25 * math.cos(angle)
+    y_coord = 25 * math.sin(angle)
 
 end
 
@@ -34,29 +33,33 @@ myGameSetUp()
 
 function playdate.update()
 
+    local crank_pos = playdate.getCrankPosition()
+    
+    rotation = crank_pos / 360.0 * math.pi
+
+    rotated_x = (25 * math.cos(rotation))
+    rotated_y = (25 * math.sin(rotation)) 
+
+
     if playdate.buttonIsPressed( playdate.kButtonUp ) then
-        x = x - 10
+        y = y - 10
     end
     if playdate.buttonIsPressed( playdate.kButtonDown ) then
-        x = x + 10
+        y = y + 10
     end
     if playdate.buttonIsPressed( playdate.kButtonLeft) then
-        y = y - 20
+        x = x - 20
     end
     if playdate.buttonIsPressed( playdate.kButtonRight) then
-        y = y + 20
+        x = x + 20
     end
 
     gfx.clear()
+    gfx.drawRect(187, 0, 10, 70)
     gfx.drawCircleAtPoint(x, y, 25)
 
-    playdate.graphics.drawLine(x + x_coord, y + y_coord, x - x_coord, y - y_coord)
+    playdate.graphics.drawLine(x + rotated_x, y + rotated_y, x - rotated_x, y - rotated_y)
 
-    -- Call the functions below in playdate.update() to draw sprites and keep
-    -- timers updated. (We aren't using timers in this example, but in most
-    -- average-complexity games, you will.)
-
-    -- gfx.sprite.update()
     playdate.timer.updateTimers()
 
 end
